@@ -1,0 +1,258 @@
+{
+    "name": "google-drive",
+    "label": "Google Drive",
+    "description": "Google drive connector can be used to list, add, remove, download and upload files from google drive using playbook.",
+    "publisher": "Community",
+    "cs_approved": false,
+    "cs_compatible": true,
+    "version": "1.0.0",
+    "icon_small_name": "small.png",
+    "icon_large_name": "medium.png",
+    "category": "IT Service",
+    "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.0/google-drive/449/google-drive-v1-0-0",
+    "configuration": {
+        "fields": [
+            {
+                "title": "Server URL",
+                "type": "text",
+                "name": "server",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "description": "The service-based URL of the Google API server to which you will connect and perform the automated operations. ",
+                "value": "https://www.googleapis.com"
+            },
+            {
+                "title": "Client ID",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "client_id",
+                "description": "Unique ID of the Google Drive application that is used to create an authentication token required to access the API.."
+            },
+            {
+                "title": "Client Secret",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "password",
+                "name": "client_secret",
+                "description": " Unique Client Secret of the Google application that is used to create an authentication token required to access the API. For information on how to get the secret key, see Using OAuth 2.0 for Web Server Applications. "
+            },
+            {
+                "title": "Authorization Code",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "password",
+                "name": "code",
+                "tooltip": "The authorization code that you have acquired during the authorization step. For more information, see the Accessing the Google Drive API section. ",
+                "description": "The authorization code that you acquired during the authorization step. For more information, see the Accessing the Google Drive API section."
+            },
+            {
+                "title": "Redirect URL",
+                "description": "The redirect_uri of your app, where authentication responses can be sent and received by your app. It must exactly match one of the redirect_uri's you registered in the app registration portal.",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "redirect_url",
+                "placeholder": "E.g. https://localhost",
+                "tooltip": "The redirect_uri of your app, where authentication responses can be sent and received by your app. It must exactly match one of the redirect_uri's you registered in the app registration portal."
+            },
+            {
+                "title": "Verify SSL",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "checkbox",
+                "name": "verify_ssl",
+                "value": true,
+                "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True."
+            }
+        ]
+    },
+    "operations": [
+        {
+            "operation": "get_all_files",
+            "title": "Get File List",
+            "description": "Gets a list of all the files in Google Drive based on the count of files you have specified. ",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Page Size",
+                    "description": "Specify the number of file to display per page",
+                    "name": "pageSize",
+                    "type": "integer",
+                    "visible": true,
+                    "editable": true,
+                    "required": false,
+                    "tooltip": "Specify the number of file to display per page",
+                    "value":10
+                }
+            ],
+            "annotation": "get_all_files",
+            "category": "investigation",
+            "output_schema": {
+                "kind": "",
+                "incompleteSearch": "",
+                "files": [
+                    {
+                        "kind": "",
+                        "id": "",
+                        "name": "",
+                        "mimeType": ""
+                    }
+                ]
+            }
+        },
+        {
+            "operation": "delete_file",
+            "title": "Delete File",
+            "description": "Deletes a file from Google Drive based on the file ID you have specified. ",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "File ID",
+                    "tooltip": "The ID of the file to delete",
+                    "description": "Specify the file ID of the file to delete from Google Drive. You can get the file ID from the Get File List operation. step. ",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "fileId"
+                }
+            ],
+            "output_schema": {},
+            "category": "containment"
+        },
+        {
+            "operation": "empty_trash",
+            "title": "Empty Trash",
+            "description": "Permanently deletes all of the user's files from the Trash folder. ",
+            "enabled": true,
+            "parameters": [],
+            "output_schema": {},
+            "category": "containment"
+        },
+        {
+            "operation": "upload_file",
+            "title": "Upload File",
+            "description": "Uploads a file to Google Drive based on the attachment IRI you have specified. ",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Attachment IRI",
+                    "tooltip": "Specify the attachment IRI of the file to upload. The attachment IRI can be found in the Dynamic Values -> IRI Lookup. ",
+                    "description": "Specify the attachment IRI of the file to upload. The attachment IRI can be found in the Dynamic Values -> IRI Lookup. ",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "fileIRI"
+                },
+                {
+                    "title": "New File Name",
+                    "tooltip": "Specify a name for the uploaded file. If left blank, it takes the filename associated with the specified attachment IRI. ",
+                    "description": "Specify a name for the uploaded file. If left blank, it takes the filename associated with the specified attachment IRI. ",
+                    "required": false,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "new_file_name"
+                }
+            ],
+            "output_schema": [
+                {
+                    "file_id": ""
+                }
+            ],
+            "category": "containment"
+        },
+        {
+            "operation": "download_file",
+            "title": "Download File",
+            "description": "Downloads a file from Google Drive based on the file ID you have specified. It then creates a record in FortiSOAR's Attachments module. ",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "File ID",
+                    "tooltip": "ID of the file to Download",
+                    "description": "Specify the ID of the file to download from Google Drive. You can get the file ID from the Get File List operation. Note: The file ID that you have specified for download must not have .folder appended in the mimeType. ",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "file_id"
+                }
+            ],
+            "output_schema": {
+                "id": "",
+                "@id": "",
+                "file": {
+                    "id": "",
+                    "@id": "",
+                    "size": "",
+                    "uuid": "",
+                    "@type": "",
+                    "assignee": "",
+                    "filename": "",
+                    "metadata": [],
+                    "mimeType": "",
+                    "thumbnail": "",
+                    "uploadDate": ""
+                },
+                "name": "",
+                "type": "",
+                "uuid": "",
+                "@type": "",
+                "tasks": [],
+                "alerts": [],
+                "assets": [],
+                "owners": [],
+                "people": [],
+                "@context": "",
+                "assignee": "",
+                "comments": [],
+                "warrooms": [],
+                "incidents": [],
+                "createDate": "",
+                "createUser": {
+                    "id": "",
+                    "@id": "",
+                    "name": "",
+                    "uuid": "",
+                    "@type": "",
+                    "avatar": "",
+                    "userId": "",
+                    "userType": "",
+                    "createDate": "",
+                    "createUser": "",
+                    "modifyDate": "",
+                    "modifyUser": ""
+                },
+                "indicators": [],
+                "modifyDate": "",
+                "modifyUser": {
+                    "id": "",
+                    "@id": "",
+                    "name": "",
+                    "uuid": "",
+                    "@type": "",
+                    "avatar": "",
+                    "userId": "",
+                    "userType": "",
+                    "createDate": "",
+                    "createUser": "",
+                    "modifyDate": "",
+                    "modifyUser": ""
+                },
+                "recordTags": [],
+                "userOwners": [],
+                "description": ""
+            },
+            "category": "containment"
+        }
+    ]
+}

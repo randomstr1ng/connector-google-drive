@@ -1,0 +1,559 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "uuid": "3065aed6-a6d5-4844-a00c-be7cb67e67ef",
+      "@type": "WorkflowCollection",
+      "name": "Sample - Google Drive - 1.0.0",
+      "description": "Google drive connector can be used to list, add, remove, download and upload files from google drive using playbook.",
+      "visible": true,
+      "image": null,
+      "recordTags": [
+        "Google",
+        "google-drive"
+      ],
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "uuid": "bc45eb7b-5906-4394-ba09-752ffdafa80b",
+          "collection": "/api/3/workflow_collections/3065aed6-a6d5-4844-a00c-be7cb67e67ef",
+          "triggerLimit": null,
+          "description": "Gets a list of all the files in Google Drive based on the count of files you have specified. ",
+          "name": "Get File List",
+          "tag": "#Google Drive",
+          "recordTags": [
+            "Google",
+            "google-drive"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/a91bb557-8d9a-4798-b214-3a806d3276ae",
+          "steps": [
+            {
+              "uuid": "a91bb557-8d9a-4798-b214-3a806d3276ae",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "87701bb5-a332-4794-bf79-b2eb1c728fc6",
+                "title": "Google Drive: Get File List",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "ce53e02a-ca31-4a42-a9b4-f01babff06ae",
+              "@type": "WorkflowStep",
+              "name": "Get File List",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Google Drive",
+                "config": "''",
+                "params": {
+                  "pageSize": 10
+                },
+                "version": "1.0.0",
+                "connector": "google-drive",
+                "operation": "get_all_files",
+                "operationTitle": "Get File List",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "10dc6f54-87c9-4434-bca5-00041ed396a3",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Get File List",
+              "sourceStep": "/api/3/workflow_steps/a91bb557-8d9a-4798-b214-3a806d3276ae",
+              "targetStep": "/api/3/workflow_steps/ce53e02a-ca31-4a42-a9b4-f01babff06ae"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "551f18a1-b4d3-41c6-9407-6ae88f00b553",
+          "collection": "/api/3/workflow_collections/3065aed6-a6d5-4844-a00c-be7cb67e67ef",
+          "triggerLimit": null,
+          "description": "Deletes a file from Google Drive based on the file ID you have specified. ",
+          "name": "Delete File",
+          "tag": "#Google Drive",
+          "recordTags": [
+            "Google",
+            "google-drive"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/ed885462-73c4-4abd-8e4c-9e4fe7bb725e",
+          "steps": [
+            {
+              "uuid": "ed885462-73c4-4abd-8e4c-9e4fe7bb725e",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "2e382653-9af9-43e7-96d5-464903153b7c",
+                "title": "Google Drive: Delete File",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "cf3c211c-82b6-490c-bacf-f215617474ba",
+              "@type": "WorkflowStep",
+              "name": "Delete File",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Google Drive",
+                "config": "''",
+                "params": {
+                  "file_id":"1Db_rTs2GYTAF9Lfxxbwp34x2_13hsZQh"
+                },
+                "version": "1.0.0",
+                "connector": "google-drive",
+                "operation": "delete_file",
+                "operationTitle": "Delete File",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "fb9d7ac0-3899-4ddb-b087-e70e92c4e6b0",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Delete File",
+              "sourceStep": "/api/3/workflow_steps/ed885462-73c4-4abd-8e4c-9e4fe7bb725e",
+              "targetStep": "/api/3/workflow_steps/cf3c211c-82b6-490c-bacf-f215617474ba"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "c915a6a5-3176-4a0c-b60a-b8113e83d795",
+          "collection": "/api/3/workflow_collections/3065aed6-a6d5-4844-a00c-be7cb67e67ef",
+          "triggerLimit": null,
+          "description": "Permanently deletes all of the user's files from the Trash folder. ",
+          "name": "Empty Trash",
+          "tag": "#Google Drive",
+          "recordTags": [
+            "Google",
+            "google-drive"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/3623c3f2-2ed5-42d4-9a1f-7f37bf4fc6cc",
+          "steps": [
+            {
+              "uuid": "3623c3f2-2ed5-42d4-9a1f-7f37bf4fc6cc",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "40f6ed09-2ddb-47fd-850c-334c629f080a",
+                "title": "Google Drive: Empty Trash",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "b2100e3f-245a-4819-a7a4-9285bd20a85e",
+              "@type": "WorkflowStep",
+              "name": "Empty Trash",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Google Drive",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "google-drive",
+                "operation": "empty_trash",
+                "operationTitle": "Empty Trash",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "fea77608-92d9-46d8-a6dc-3c5cfbfb9b25",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Empty Trash",
+              "sourceStep": "/api/3/workflow_steps/3623c3f2-2ed5-42d4-9a1f-7f37bf4fc6cc",
+              "targetStep": "/api/3/workflow_steps/b2100e3f-245a-4819-a7a4-9285bd20a85e"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "dfb98690-91cd-4e06-83f8-aee8e78e2c5b",
+          "collection": "/api/3/workflow_collections/3065aed6-a6d5-4844-a00c-be7cb67e67ef",
+          "triggerLimit": null,
+          "description": "Uploads a file to Google Drive based on the attachment IRI you have specified. ",
+          "name": "Upload File",
+          "tag": "#Google Drive",
+          "recordTags": [
+            "Google",
+            "google-drive"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/e0167505-6ee6-4787-b8df-90661e5c1653",
+          "steps": [
+            {
+              "uuid": "e0167505-6ee6-4787-b8df-90661e5c1653",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "4734bcc7-23db-47be-b1e6-07c6a547ce55",
+                "title": "Google Drive: Upload File",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "b77571ed-fc2f-456c-b5b2-ace5302371ab",
+              "@type": "WorkflowStep",
+              "name": "Upload File",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Google Drive",
+                "config": "''",
+                "params": {
+                  "fileIRI":"/api/3/attachments/4dec7ecb-fee2-42c3-b701-db81d126c38c"
+                },
+                "version": "1.0.0",
+                "connector": "google-drive",
+                "operation": "upload_file",
+                "operationTitle": "Upload File",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "f2ffaa5e-477f-458a-aa17-d6dc03acb1d6",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Upload File",
+              "sourceStep": "/api/3/workflow_steps/e0167505-6ee6-4787-b8df-90661e5c1653",
+              "targetStep": "/api/3/workflow_steps/b77571ed-fc2f-456c-b5b2-ace5302371ab"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "d2f8589e-1d34-4cd2-b93e-b8659d338267",
+          "collection": "/api/3/workflow_collections/3065aed6-a6d5-4844-a00c-be7cb67e67ef",
+          "triggerLimit": null,
+          "description": "Downloads a file from Google Drive based on the file ID you have specified. It then creates a record in FortiSOAR's Attachments module. ",
+          "name": "Download File",
+          "tag": "#Google Drive",
+          "recordTags": [
+            "Google",
+            "google-drive"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/bf4dc9a3-904f-443b-8704-a268f514286c",
+          "steps": [
+            {
+              "uuid": "bf4dc9a3-904f-443b-8704-a268f514286c",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "e9114a47-ecca-4e77-a6e9-fd1702b823c7",
+                "title": "Google Drive: Download File",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "1662f7cb-922f-4849-92f9-c5b1be1a009d",
+              "@type": "WorkflowStep",
+              "name": "Download File",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Google Drive",
+                "config": "''",
+                "params": {
+                  "file_id":"1Db_rTs2GYTAF9Lfxxbwp34x2_13hsZQh"
+                },
+                "version": "1.0.0",
+                "connector": "google-drive",
+                "operation": "download_file",
+                "operationTitle": "Download File",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "ad15dd69-7fdc-4477-a178-d318e4bb91c6",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Download File",
+              "sourceStep": "/api/3/workflow_steps/bf4dc9a3-904f-443b-8704-a268f514286c",
+              "targetStep": "/api/3/workflow_steps/1662f7cb-922f-4849-92f9-c5b1be1a009d"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Ingest Drive Files",
+          "aliasName": null,
+          "tag": null,
+          "description": "Gets all the files from drive and creates an attachment record for the same.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1669204165,
+          "collection": "/api/3/workflow_collections/3065aed6-a6d5-4844-a00c-be7cb67e67ef",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/93b8f2e3-2775-46c8-9c4c-8965065baf2e",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Download file",
+              "description": null,
+              "arguments": {
+                "name": "Google Drive",
+                "config": "1819d114-cd02-4d7b-8fba-2627a694fc0f",
+                "params": {
+                  "file_id": "{{vars.item.id}}"
+                },
+                "version": "1.0.0",
+                "for_each": {
+                  "item": "{{vars.steps.Get_all_files.data}}",
+                  "parallel": false,
+                  "condition": "{{vars.item.mimeType is not in(\"'application/vnd.google-apps.folder', 'application/octet-stream'\")}}"
+                },
+                "connector": "google-drive",
+                "operation": "download_file",
+                "operationTitle": "Download File",
+                "pickFromTenant": false,
+                "step_variables": []
+              },
+              "status": null,
+              "top": "30",
+              "left": "775",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "62158f17-c51c-462f-8587-a19a00d6fdb5"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get all files",
+              "description": null,
+              "arguments": {
+                "name": "Google Drive",
+                "config": "1819d114-cd02-4d7b-8fba-2627a694fc0f",
+                "params": {
+                  "pageSize": 100
+                },
+                "version": "1.0.0",
+                "connector": "google-drive",
+                "operation": "get_all_files",
+                "operationTitle": "Get File List",
+                "pickFromTenant": false,
+                "step_variables": []
+              },
+              "status": null,
+              "top": "30",
+              "left": "450",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "8f84a428-1dae-469c-a737-b907df3677eb"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "633962f9-165f-465c-b687-b21ea4135490",
+                "resources": [
+                  "attachments"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "params": [],
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "93b8f2e3-2775-46c8-9c4c-8965065baf2e"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get all files -> Download file",
+              "targetStep": "/api/3/workflow_steps/62158f17-c51c-462f-8587-a19a00d6fdb5",
+              "sourceStep": "/api/3/workflow_steps/8f84a428-1dae-469c-a737-b907df3677eb",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "c4044e3b-be15-4438-af37-f3fbfd81a93d"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Get all files",
+              "targetStep": "/api/3/workflow_steps/8f84a428-1dae-469c-a737-b907df3677eb",
+              "sourceStep": "/api/3/workflow_steps/93b8f2e3-2775-46c8-9c4c-8965065baf2e",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "f629c318-d733-4232-86db-37e9e7ffdb28"
+            }
+          ],
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "946ecd1e-4218-45d2-95e8-3d45f2e2f13a",
+          "id": 651,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "Google",
+            "google-drive"
+          ]
+        }
+      ]
+    }
+  ]
+}
