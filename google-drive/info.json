@@ -171,6 +171,52 @@
             "category": "containment"
         },
         {
+            "operation": "remove_file_share",
+            "title": "Remove File Share",
+            "description": "Removes sharing permissions from a file. You can target a specific permission ID, a specific email address, or remove all non-owner sharing permissions.",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "File ID",
+                    "tooltip": "ID of the file to unshare",
+                    "description": "Specify the file ID of the file to unshare.",
+                    "required": true,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "file_id"
+                },
+                {
+                    "title": "Permission ID",
+                    "tooltip": "Optional permission ID to remove",
+                    "description": "Specify a permission ID to remove a specific share. If omitted, the connector can remove by email address or remove all non-owner permissions.",
+                    "required": false,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "permission_id"
+                },
+                {
+                    "title": "Email Address",
+                    "tooltip": "Optional email address to unshare",
+                    "description": "Specify the shared user's email address to remove their access. Ignored when Permission ID is provided.",
+                    "required": false,
+                    "editable": true,
+                    "visible": true,
+                    "type": "text",
+                    "name": "email_address"
+                }
+            ],
+            "output_schema": {
+                "file_id": "",
+                "removed_permissions": [
+                    ""
+                ],
+                "removed_count": 0
+            },
+            "category": "containment"
+        },
+        {
             "operation": "download_file",
             "title": "Download File",
             "description": "Downloads a file from Google Drive based on the file ID you have specified. It then creates a record in FortiSOAR's Attachments module. ",

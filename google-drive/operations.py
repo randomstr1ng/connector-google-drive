@@ -123,6 +123,53 @@ def download_file(config, params, connector_info):
         logger.exception("{0}".format(str(err)))
         raise ConnectorError("{0}".format(str(err)))
 
+def remove_file_share(config, params, connector_info):
+    try:
+        service = _new_service(config, 'drive', 'v3', connector_info)
+        file_id = params.get('file_id') or params.get('fileId')
+        permission_id = params.get('permission_id') or params.get('permissionId')
+        email_address = params.get('email_address') or params.get('emailAddress')
+
+        if not file_id:
+            raise ConnectorError('Missing required parameter: file_id')
+
+        permissions_resp = service.permissions().list(
+            fileId=file_id,
+            fields='permissions(id,emailAddress,role,type)'
+        ).execute()
+        permissions = permissions_resp.get('permissions', [])
+
+        if permission_id:
+            target_permissions = [perm for perm in permissions if perm.get('id') == permission_id]
+            if not target_permissions:
+                raise ConnectorError('Permission ID not found for specified file')
+        elif email_address:
+            target_permissions = [
+                perm for perm in permissions
+                if (perm.get('emailAddress') or '').lower() == email_address.lower()
+            ]
+            if not target_permissions:
+                raise ConnectorError('No shared permission found for specified email address')
+        else:
+            # If no target is specified, remove all non-owner permissions.
+            target_permissions = [perm for perm in permissions if perm.get('role') != 'owner']
+
+        removed_permission_ids = []
+        for permission in target_permissions:
+            perm_id = permission.get('id')
+            if not perm_id or permission.get('role') == 'owner':
+                continue
+            service.permissions().delete(fileId=file_id, permissionId=perm_id).execute()
+            removed_permission_ids.append(perm_id)
+
+        return {
+            'file_id': file_id,
+            'removed_permissions': removed_permission_ids,
+            'removed_count': len(removed_permission_ids)
+        }
+    except Exception as err:
+        logger.exception("{0}".format(str(err)))
+        raise ConnectorError("{0}".format(str(err)))
 
 def _check_health(config, connector_info):
     try:
@@ -137,5 +184,6 @@ operations = {
     'delete_file': delete_file,
     'empty_trash': empty_trash,
     'upload_file':upload_file,
-    'download_file':download_file
+    'download_file':download_file,
+    'remove_file_share':remove_file_share
 }
